@@ -13,8 +13,10 @@ import time
 CoinName = coinsym # Enter the ticker of the Altcoin 
 MaxCoinFlipBet = 10 # Enter the max bet amount for coinflip
 MinCoinFlipBet = 1 # Enter the min bet amount for coinflip
-MaxBlackJackBet = 10 # Enter the max bet amount for blackjack
-MinBlackJackBet = 0.01 # Enter the min bet amount for blackjack
+MaxBlackJackBet = 50 # Enter the max bet amount for blackjack
+MinBlackJackBet = 1 # Enter the min bet amount for blackjack
+MaxRollerJackBet = 50000
+MinRollerJackBet = 1000
 MaxDiceBet = 10 # Enter the max bet amount for dice
 MinDiceBet = 0.01 # Enter the min bet amount for dice
 LostBetsAddy = lostbetsaddy # Enter the address the client would like lost bets to be sent to
@@ -71,8 +73,8 @@ async def create(ctx):
         if i[0] == raw:
             botMessage = await ctx.channel.send(uid + " \nYou already have a wallet.")
             time.sleep(5)
-            await botMessage.delete()
-            await ctx.message.delete()
+            # await botMessage.delete()
+            # await ctx.message.delete()
             return
     else:
         address = getAddress(str(ctx.author.id))
@@ -84,8 +86,8 @@ async def create(ctx):
                                    + str(address['result']) + '. \n**Balance:** ' + str(balance['result']))
         updateBalances()
         time.sleep(15)
-        await botMessage.delete()
-        await ctx.message.delete()
+        # await botMessage.delete()
+        # await ctx.message.delete()
         return
 
 # Return User Balance
@@ -100,15 +102,15 @@ async def balance(ctx):
         botMessage = await ctx.channel.send(uid + ' ' + '\n**AltCasino Wallet - ' + CoinName + '** \n**Balance:** ' + str(newBalance) + ' ' + CoinName)
         updateBalances()
         time.sleep(5)
-        await botMessage.delete()
-        await ctx.message.delete()
+        # await botMessage.delete()
+        # await ctx.message.delete()
         return
     else:
         botMessage =await ctx.channel.send(uid + "\nYou haven't created a wallet yet. Please use **$create** command.")
         updateBalances()
         time.sleep(5)
-        await botMessage.delete()
-        await ctx.message.delete()
+        # await botMessage.delete()
+        # await ctx.message.delete()
         return
 
 # Return User Deposit Address
@@ -124,14 +126,14 @@ async def address(ctx):
         print(userAddy)
         botMessage = await ctx.channel.send(uid + '\n**AltCasino Wallet - CPU**' + '\n**Wallet Address:** ' + userAddy)
         time.sleep(5)
-        await botMessage.delete()
-        await ctx.message.delete()
+        # await botMessage.delete()
+        # await ctx.message.delete()
         return
     else:
         botMessage = await ctx.channel.send(uid + "\nYou haven't created a wallet yet. Please use **$create** command.")
         time.sleep(5)
-        await botMessage.delete()
-        await ctx.message.delete()
+        # await botMessage.delete()
+        # await ctx.message.delete()
         return
 
 # Send Coins
@@ -147,16 +149,16 @@ async def send(ctx, arg1, arg2):
     if str(spend['result']) == "None":
         botMessage = await ctx.channel.send(tuid + "\n**Error:** " + str(spend['error']['message']))
         time.sleep(5)
-        await botMessage.delete()
-        await ctx.message.delete()
+        # await botMessage.delete()
+        # await ctx.message.delete()
         return
-        # await ctx.channel.send(tuid + "\n**Error:** Insufficient Funds")
+        await ctx.channel.send(tuid + "\n**Error:** Insufficient Funds")
     
     else:
         botMessage = await ctx.channel.send(tuid + "\nTransaction Successful: \n**TXID:** " + str(spend['result']))
         time.sleep(5)
-        await botMessage.delete()
-        await ctx.message.delete()
+        # await botMessage.delete()
+        # await ctx.message.delete()
 
 # Start a Game of Coinflip
 @bot.command()
@@ -176,20 +178,20 @@ async def coinflip(ctx, bet, userChoice):
         if newBalance < float(bet):
             botMessage = await ctx.channel.send(tuid + "\nSorry, you don't have that many coins. \n**Balance:** " + str(newBalance) + ' ' + CoinName)
             time.sleep(5)
-            await botMessage.delete()
-            await ctx.message.delete()
+            # await botMessage.delete()
+            # await ctx.message.delete()
             return
         elif float(bet) > MaxCoinFlipBet:
             botMessage = await ctx.channel.send(tuid + "\nSorry, the max bet for Coinflip is " + str(MaxCoinFlipBet) + ' ' + CoinName)
             time.sleep(5)
-            await botMessage.delete()
-            await ctx.message.delete()
+            # await botMessage.delete()
+            # await ctx.message.delete()
             return
         elif float(bet) < MinCoinFlipBet:
             botMessage = await ctx.channel.send(tuid + "\nSorry, the minimum bet for Coinflip is " + str(MinCoinFlipBet) + ' ' + CoinName)
             time.sleep(5)
-            await botMessage.delete()
-            await ctx.message.delete()
+            # await botMessage.delete()
+            # await ctx.message.delete()
             return
         elif newBalance >= float(bet):
             betOn = userChoice.lower()
@@ -204,10 +206,10 @@ async def coinflip(ctx, bet, userChoice):
                 updateBalances()
                 botMessage = await ctx.channel.send("**Please wait 5 seconds before placing a new bet**")
                 time.sleep(5)
-                await botMessage.delete()
-                await botMessage1.delete()
-                await ctx.message.delete()
-                await ctx.channel.purge(limit=3)
+                # await botMessage.delete()
+                # await botMessage1.delete()
+                # await ctx.message.delete()
+                # await ctx.channel.purge(limit=3)
                 await ctx.channel.send("**You can now place a new bet**")
                 return
             
@@ -217,10 +219,10 @@ async def coinflip(ctx, bet, userChoice):
                 updateBalances()
                 botMessage = await ctx.channel.send("**Please wait 5 seconds before placing a new bet**")
                 time.sleep(5)
-                await botMessage.delete()
-                await botMessage1.delete()
-                await ctx.message.delete()
-                await ctx.channel.purge(limit=3)
+                # await botMessage.delete()
+                # await botMessage1.delete()
+                # await ctx.message.delete()
+                # await ctx.channel.purge(limit=3)
                 await ctx.channel.send("**You can now place a new bet**")
                 return
         return
@@ -357,9 +359,9 @@ async def blackjack(ctx, bet):
                 updateBalances()
                 botMessage = await ctx.channel.send("**Please wait 5 seconds before placing a new bet**")
                 time.sleep(5)
-                await botMessage.delete()
-                await ctx.message.delete()
-                await ctx.channel.purge(limit=10)
+                # await botMessage.delete()
+                # await ctx.message.delete()
+                # await ctx.channel.purge(limit=10)
                 botMessage = await ctx.channel.send("You can now place a new bet.")
                 return
         
@@ -387,9 +389,9 @@ async def blackjack(ctx, bet):
                 updateBalances()
                 botMessage = await ctx.channel.send("**Please wait 5 seconds before placing a new bet**")
                 time.sleep(5)
-                await botMessage.delete()
-                await ctx.message.delete()
-                await ctx.channel.purge(limit=5)
+                # await botMessage.delete()
+                # await ctx.message.delete()
+                # await ctx.channel.purge(limit=5)
                 botMessage = await ctx.channel.send("You can now place a new bet.")
                 return
             
@@ -403,9 +405,9 @@ async def blackjack(ctx, bet):
                     updateBalances()
                     botMessage = await ctx.channel.send("**Please wait 5 seconds before placing a new bet**")
                     time.sleep(5)
-                    await botMessage.delete()
-                    await ctx.message.delete()
-                    await ctx.channel.purge(limit=5)
+                    # await botMessage.delete()
+                    # await ctx.message.delete()
+                    # await ctx.channel.purge(limit=5)
                     botMessage = await ctx.channel.send("You can now place a new bet.")
                     return
                 elif dealerTotal > playerTotal:
@@ -416,9 +418,9 @@ async def blackjack(ctx, bet):
                     updateBalances()
                     botMessage = await ctx.channel.send("**Please wait 5 seconds before placing a new bet**")
                     time.sleep(5)
-                    await botMessage.delete()
-                    await ctx.message.delete()
-                    await ctx.channel.purge(limit=5)
+                    # await botMessage.delete()
+                    # await ctx.message.delete()
+                    # await ctx.channel.purge(limit=5)
                     botMessage = await ctx.channel.send("You can now place a new bet.")
                     return
             
@@ -430,12 +432,207 @@ async def blackjack(ctx, bet):
                 updateBalances()
                 botMessage = await ctx.channel.send("**Please wait 5 seconds before placing a new bet**")
                 time.sleep(5)
-                await botMessage.delete()
-                await ctx.message.delete()
-                await ctx.channel.purge(limit=5)
+                # await botMessage.delete()
+                # await ctx.message.delete()
+                # await ctx.channel.purge(limit=5)
                 botMessage = await ctx.channel.send("You can now place a new bet.")
                 return 
-         
+
+# Start a game of BlackJack for High Rollers
+@bot.command()
+async def rollerjack(ctx, bet):
+    toPlay = getBalance(str(ctx.author.id))
+    newBalance = toPlay['result']
+
+    tuid = "<@" + str(ctx.author.id) + ">"
+    
+    if float(bet) > MaxRollerJackBet:
+        botMessage = await ctx.channel.send(tuid + "\nSorry, Max bet for Black Jack is " + str(MaxRollerJackBet) )
+        time.sleep(5)
+        await botMessage.delete()
+        await ctx.message.delete()
+        return
+    
+    elif float(bet) < MinRollerJackBet:
+        botMessage = await ctx.channel.send(tuid + "\nSorry, Minimum bet for Black Jack is " + str(MaxRollerJackBet) )
+        time.sleep(5)
+        await botMessage.delete()
+        await ctx.message.delete()
+        return
+     
+    if newBalance < float(bet):
+        botMessage = await ctx.channel.send(tuid + "\nSorry, you don't have that many coins. \n**Balance:** " 
+        + str(newBalance) + ' ' + CoinName)
+        time.sleep(5)
+        await botMessage.delete()
+        await ctx.message.delete()
+        return
+    
+    uid = str(ctx.author.id)
+    c.execute("SELECT * FROM users WHERE userid=:uid",
+              {'uid': ctx.author.id})
+    existingUsers = c.fetchall()
+    
+    if existingUsers == []:
+        botMessage = await ctx.channel.send(tuid + "\nYou haven't created a wallet yet. Please use **$create** command.")
+        time.sleep(5)
+        await botMessage.delete()
+        await ctx.message.delete()
+        return
+    
+    for i in existingUsers:
+        userAddy = i[2]
+    
+    cValue = {'Ace': 1, 'Two': 2, 'Three': 3, 'Four': 4, 'Five': 5, 'Six': 6,
+              'Seven': 7, 'Eight': 8, 'Nine': 9, 'Ten': 10, 'Jack': 10, 'Queen': 10, 'King': 10}
+    cSuit = {':hearts:' : 0, ':spades:' : 1, ':clubs:' : 2, ':diamonds:' : 3}
+    deck = [] # Empt Deck Array
+    dCards = [] # Empty Dealer Cards Array
+    pCards = [] # Empty Player Cards Array
+
+    # Build Deck
+    for i in cValue.keys():
+        for j in cSuit.keys():
+            deck.append(i + ' of ' + j) # Adds 52 cards to the Deck Array 
+    
+    # Shuffle Deck
+    random.shuffle(deck)
+    random.shuffle(deck)
+    random.shuffle(deck)
+    # Dealer Hand
+
+    while len(dCards) != 2:
+        dCards.append(random.choice(deck)) # Picks Random Cards from the deck and places them into the Dealers Hand
+    
+    if len(dCards) == 2:
+        dFirstCard = getCardValue(dCards[0])
+        dSecondCard = getCardValue(dCards[1])
+        dealerTotal = dFirstCard + dSecondCard
+    
+    while len(pCards) != 2:
+        pCards.append(random.choice(deck)) # Picks Random Cards from the deck and places them into the Players Hand
+    
+    if len(pCards) == 2:
+        pFirstCard = getCardValue(pCards[0]) # Returns card's numerical value
+        pSecondCard = getCardValue(pCards[1])
+        playerTotal = pFirstCard + pSecondCard # Sum of Players first and second card
+    # Determine if user wants to Hit or Stay
+    if playerTotal < 21:
+        botMessage = await ctx.channel.send(tuid + "\nDealer Has **HIDDEN** & " + '**' + dCards[0] + '**' 
+        + "\nYou Have " + '**' + str(pCards) + '**' + ' :** ' + str(playerTotal) + '**' 
+        + "\n**Stay**: [S] or **Hit**: [H]?")
+        stayOrHit = await get_input_of_type(str, ctx)
+        
+        while stayOrHit.lower() != "h" and stayOrHit.lower() != "s":
+            botMessage = await ctx.channel.send(tuid + "\n Please enter **Stay**: [S] or **Hit**: [H]")
+            stayOrHit = await get_input_of_type(str, ctx)
+           
+       
+        while stayOrHit.lower() == "h":
+            pCards.append(random.choice(deck))
+            cardNum = len(pCards)
+            cardNum -= 1
+            newCard = getCardValue(pCards[cardNum])
+            playerTotal += newCard
+            botMessage = await ctx.channel.send(tuid + "\nDealer Has **HIDDEN** & " + '**' + dCards[0] + '**'
+             + "\nYou Have " + '**' + str(pCards) + '**' + ' : **' + str(playerTotal) + '**' + "\n**Stay**: [S] or **Hit**: [H]?")
+
+
+           # if Player hit and hasn't busted ask player to Stay or Hit
+            if playerTotal <= 21:
+                stayOrHit = await get_input_of_type(str, ctx)
+                while stayOrHit.lower() != "h" and stayOrHit.lower() != "s":
+                    botMessage = await ctx.channel.send(tuid + "\n Please enter **Stay**: [S] or **Hit**: [H]")
+                    stayOrHit = await get_input_of_type(str, ctx)
+                    
+
+
+           # Determine if Player Hit and hasn't busted
+            elif playerTotal > 21:
+                botMessage = await ctx.channel.send(tuid + "\nBust! You Lost " + str(bet) + ' ' + CoinName +  '\nYour Total: **' + str(playerTotal) + '**')
+                sendCoins(uid, LostBetsAddy, bet)
+                updateBalances()
+                botMessage = await ctx.channel.send("**Please wait 5 seconds before placing a new bet**")
+                time.sleep(5)
+                # await botMessage.delete()
+                # await ctx.message.delete()
+                # await ctx.channel.purge(limit=10)
+                botMessage = await ctx.channel.send("You can now place a new bet.")
+                return
+        
+        # If Decision does not equal hit
+        # TODO switch this to a more explicit method, setting it equal to Stay causes random infinite loops
+        # It's currently fixed by not allowing input other than stay or hit
+        while stayOrHit.lower() != "h": 
+    
+            # If Dealer hand is less than 16, Dealer draws another card
+
+            if dealerTotal <= 16:
+                dCards.append(random.choice(deck))
+                DcardNum = len(dCards)
+                DcardNum -= 1
+                newDCard = getCardValue(dCards[DcardNum])
+                dealerTotal += newDCard
+             
+            
+            # Determine if Dealer Hand Busted
+            elif dealerTotal > 21:
+                botMessage = await ctx.channel.send(tuid + "\nDealer Has " + '**' + str(dCards) + '**'
+                    + "\nYou Have " + '**' + str(pCards) + '**' + ' : **' + str(playerTotal) + '**')
+                botMessage = await ctx.channel.send(tuid + "\nYou Won! " + str(bet) + ' ' + CoinName +"\nDealer Busted" + '\nYour Total: ' '**' + str(playerTotal) + '** \nDealer Total: **' + str(dealerTotal) + '**')
+                sendCoins(myUid, userAddy, bet)
+                updateBalances()
+                botMessage = await ctx.channel.send("**Please wait 5 seconds before placing a new bet**")
+                time.sleep(5)
+                # await botMessage.delete()
+                # await ctx.message.delete()
+                # await ctx.channel.purge(limit=5)
+                botMessage = await ctx.channel.send("You can now place a new bet.")
+                return
+            
+            # Determine Winner
+            elif dealerTotal > 16 and dealerTotal <= 21:
+                if dealerTotal < playerTotal:
+                    botMessage = await ctx.channel.send(tuid + "\nDealer Has " + '**' + str(dCards) + '**'
+                    + "\nYou Have " + '**' + str(pCards) + '**' + ' : **' + str(playerTotal) + '**')
+                    botMessage = await ctx.channel.send(tuid + "\nYou Won! "  + str(bet) + ' ' +CoinName + '\nYour Total: ' '**' + str(playerTotal) + '** \nDealer Total: **' + str(dealerTotal)+ '**')
+                    sendCoins(myUid, userAddy, bet)
+                    updateBalances()
+                    botMessage = await ctx.channel.send("**Please wait 5 seconds before placing a new bet**")
+                    time.sleep(5)
+                    # await botMessage.delete()
+                    # await ctx.message.delete()
+                    # await ctx.channel.purge(limit=5)
+                    botMessage = await ctx.channel.send("You can now place a new bet.")
+                    return
+                elif dealerTotal > playerTotal:
+                    botMessage = await ctx.channel.send(tuid + "\nDealer Has " + '**' + str(dCards) + '**'
+                    + "\nYou Have " + '**' + str(pCards) + '**' + ' : **' + str(playerTotal) + '**')
+                    botMessage = await ctx.channel.send(tuid + "\nYou Lost! "  + str(bet) + ' ' +CoinName + '\nYour Total: ' '**' + str(playerTotal) + '** \nDealer Total: **' + str(dealerTotal) + '**')
+                    sendCoins(uid, LostBetsAddy, bet)
+                    updateBalances()
+                    botMessage = await ctx.channel.send("**Please wait 5 seconds before placing a new bet**")
+                    time.sleep(5)
+                    # await botMessage.delete()
+                    # await ctx.message.delete()
+                    # await ctx.channel.purge(limit=5)
+                    botMessage = await ctx.channel.send("You can now place a new bet.")
+                    return
+            
+            # Determine A Tie
+            if playerTotal == dealerTotal and playerTotal <= 21 and dealerTotal <= 21:
+                botMessage = await ctx.channel.send(tuid + "\nDealer Has " + '**' + str(dCards) + '**'
+                    + "\nYou Have " + '**' + str(pCards) + '**' + ' : **' + str(playerTotal) + '**')
+                botMessage = await ctx.channel.send(tuid + "\nTie! No Payout " + '\nYour Total: ' '**' + str(playerTotal) + '** \nDealer Total: **' + str(dealerTotal) + '**')
+                updateBalances()
+                botMessage = await ctx.channel.send("**Please wait 5 seconds before placing a new bet**")
+                time.sleep(5)
+                # await botMessage.delete()
+                # await ctx.message.delete()
+                # await ctx.channel.purge(limit=5)
+                botMessage = await ctx.channel.send("You can now place a new bet.")
+                return 
+
 # Start a game of Dice
 @bot.command()
 async def dice(ctx, bet, under):
@@ -462,7 +659,7 @@ async def dice(ctx, bet, under):
        await botMessage.delete()
        await ctx.message.delete()
        return
-    
+
     elif float(bet) > MaxDiceBet:
         botMessage = await ctx.channel.send(tuid + "\nSorry, the max bet for Dice is " + str(MaxDiceBet) + ' ' + CoinName)
         time.sleep(5)
