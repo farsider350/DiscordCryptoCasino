@@ -290,7 +290,12 @@ async def blackjack(ctx, bet):
     
     cValue = {'Ace': 1, 'Two': 2, 'Three': 3, 'Four': 4, 'Five': 5, 'Six': 6,
               'Seven': 7, 'Eight': 8, 'Nine': 9, 'Ten': 10, 'Jack': 10, 'Queen': 10, 'King': 10}
-    cSuit = {':hearts:' : 0, ':spades:' : 1, ':clubs:' : 2, ':diamonds:' : 3}
+    cSuit = {':hearts:' : 0, ':spades:' : 1, ':clubs:' : 2, ':diamonds:' : 3, 
+              ':hearts:' : 4, ':spades:' : 5, ':clubs:' : 6, ':diamonds:' : 7, 
+              ':hearts:' : 8, ':spades:' : 9, ':clubs:' : 10, ':diamonds:' : 11, 
+              ':hearts:' : 12, ':spades:' : 13, ':clubs:' : 14, ':diamonds:' : 15, 
+              ':hearts:' : 16, ':spades:' : 17, ':clubs:' : 18, ':diamonds:' : 19, 
+              ':hearts:' : 20, ':spades:' : 21, ':clubs:' : 22, ':diamonds:' : 23}
     deck = [] # Empt Deck Array
     dCards = [] # Empty Dealer Cards Array
     pCards = [] # Empty Player Cards Array
@@ -298,7 +303,7 @@ async def blackjack(ctx, bet):
     # Build Deck
     for i in cValue.keys():
         for j in cSuit.keys():
-            deck.append(i + ' of ' + j) # Adds 52 cards to the Deck Array 
+            deck.append(i + ' of ' + j) # Adds 6 Decks of Cards 
     
     # Shuffle Deck
     random.shuffle(deck)
@@ -485,7 +490,12 @@ async def rollerjack(ctx, bet):
     
     cValue = {'Ace': 1, 'Two': 2, 'Three': 3, 'Four': 4, 'Five': 5, 'Six': 6,
               'Seven': 7, 'Eight': 8, 'Nine': 9, 'Ten': 10, 'Jack': 10, 'Queen': 10, 'King': 10}
-    cSuit = {':hearts:' : 0, ':spades:' : 1, ':clubs:' : 2, ':diamonds:' : 3}
+    cSuit = {':hearts:' : 0, ':spades:' : 1, ':clubs:' : 2, ':diamonds:' : 3, 
+              ':hearts:' : 4, ':spades:' : 5, ':clubs:' : 6, ':diamonds:' : 7, 
+              ':hearts:' : 8, ':spades:' : 9, ':clubs:' : 10, ':diamonds:' : 11, 
+              ':hearts:' : 12, ':spades:' : 13, ':clubs:' : 14, ':diamonds:' : 15, 
+              ':hearts:' : 16, ':spades:' : 17, ':clubs:' : 18, ':diamonds:' : 19, 
+              ':hearts:' : 20, ':spades:' : 21, ':clubs:' : 22, ':diamonds:' : 23}
     deck = [] # Empt Deck Array
     dCards = [] # Empty Dealer Cards Array
     pCards = [] # Empty Player Cards Array
@@ -493,7 +503,7 @@ async def rollerjack(ctx, bet):
     # Build Deck
     for i in cValue.keys():
         for j in cSuit.keys():
-            deck.append(i + ' of ' + j) # Adds 52 cards to the Deck Array 
+            deck.append(i + ' of ' + j) # Adds 6 Decks of Cards 
     
     # Shuffle Deck
     random.shuffle(deck)
