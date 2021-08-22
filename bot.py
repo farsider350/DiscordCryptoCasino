@@ -8,17 +8,19 @@ from collections import namedtuple
 import asyncio
 import time
 
+const { lostbetsaddy, adminuid, coinsym } = require('./config.json');
+
 # Set coin specific parameters
 
-CoinName = "" # Enter the ticker of the Altcoin 
+CoinName = "(coinsym)" # Enter the ticker of the Altcoin 
 MaxCoinFlipBet = 10 # Enter the max bet amount for coinflip
 MinCoinFlipBet = 1 # Enter the min bet amount for coinflip
 MaxBlackJackBet = 10 # Enter the max bet amount for blackjack
 MinBlackJackBet = 0.01 # Enter the min bet amount for blackjack
 MaxDiceBet = 10 # Enter the max bet amount for dice
 MinDiceBet = 0.01 # Enter the min bet amount for dice
-LostBetsAddy = "" # Enter the address the client would like lost bets to be sent to
-myUid = "" # Enter the account name for the address the client would like to pay out wins from
+LostBetsAddy = "(lostbetsaddy)" # Enter the address the client would like lost bets to be sent to
+myUid = "(adminuid)" # Enter the account name for the address the client would like to pay out wins from
 
 bot = commands.Bot(command_prefix='$')
 bot.remove_command("help")
@@ -75,7 +77,7 @@ async def create(ctx):
             await ctx.message.delete()
             return
     else:
-        address = getNewAddy(ctx.author.id)
+        address = getAddress(str(ctx.author.id))
         balance = getBalance(str(ctx.author.id))
         username = str(ctx.author)
         createWallet(raw, username, address, balance)
@@ -83,7 +85,7 @@ async def create(ctx):
         botMessage = await ctx.channel.send(uid + ' ' + '\n**AltCasino Wallet - ' + CoinName + ' ** \n**Address:** '
                                    + str(address['result']) + '. \n**Balance:** ' + str(balance['result']))
         updateBalances()
-        time.sleep(5)
+        time.sleep(15)
         await botMessage.delete()
         await ctx.message.delete()
         return
@@ -418,7 +420,7 @@ async def blackjack(ctx, bet):
                     time.sleep(5)
                     await botMessage.delete()
                     await ctx.message.delete()
-                    await ctx.channel.purge(limit=10)
+                    await ctx.channel.purge(limit=5)
                     botMessage = await ctx.channel.send("You can now place a new bet.")
                     return
             

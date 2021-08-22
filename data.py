@@ -1,8 +1,13 @@
 import sqlite3
 
-con = sqlite3.connect('YOUR_PATH.DB', check_same_thread=True)
+const { DB_PATH } = require('./config.json');
+
+con = sqlite3.connect('(DB_PATH)', check_same_thread=True)
 
 c = con.cursor()
+
+
+# Uncomment below on first startup, recomment out on every startup after that.
 
 # c.execute("""CREATE TABLE users(
 #     userid text,
@@ -11,10 +16,11 @@ c = con.cursor()
 #     balance real
 #     )""")
 
-# c.execute("INSERT INTO users VALUES ('Test','Test', '0')")
+# c.execute("INSERT INTO users VALUES ('Test','Test', '0', '0')")
 
 # c.execute("SELECT * FROM users")
 
+# End uncomment section
 
 def createWallet(raw, username, address, balance):
     c.execute("INSERT INTO users VALUES (?, ?, ?, ?)",
@@ -23,7 +29,7 @@ def createWallet(raw, username, address, balance):
 
 
 c.execute("SELECT * FROM users")
-# print(c.fetchall())
+print(c.fetchall())
 
 con.commit()
 # con.close()

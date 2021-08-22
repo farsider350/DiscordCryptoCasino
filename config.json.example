@@ -1,0 +1,12 @@
+// Add all config settings here. Max bets and game setting can also be found in bot.py
+
+
+{
+  "lostbetsaddy": "The address to collect lost bet at.",
+  "adminuid": "YOUR-DISCORD-USER-ID",
+  "coinsym": "The coins symbol",
+  "DB_PATH": "Your database path",
+  "rpcurl": "http://127.0.0.1:YOUR_RPC_PORT",
+  "rpcuser": "Your wallet rpc username",
+  "rpcpass": "Your wallet rpc password"
+}

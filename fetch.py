@@ -3,10 +3,11 @@ import json
 from data import *
 import threading
 
+const { rpcurl, rpcuser, rpcpass } = require('./config.json');
 
-NODE_URL = "http://127.0.0.1:YOUR_RPC_PORT"  # Enter port number for coins rpc port
-NODE_USER = "YOUR_USERNAME"
-NODE_PASSWORD = "YOUR_PASSWORD"
+NODE_URL = "(rpcurl)"
+NODE_USER = "(rpcuser)"
+NODE_PASSWORD = "(rpcpass)"
 
 # Makes rpc connection
 
@@ -24,26 +25,26 @@ def rpc(method, params=[]):
 # Gets a new address
 
 
-def getAddress():
-    WalletResponse = rpc('getnewaddress')
-    print(WalletResponse)
-    return WalletResponse
+def getAddress(userId):
+    Address = rpc('getnewaddress', [""+userId+""])
+    print(Address['result'])
+    return Address
 
 # Gets user balance
 
 
 def getBalance(userId):
     WalletBalance = rpc('getbalance', [""+userId+""])
-    print(WalletBalance)
+    print(WalletBalance['result'])
     return WalletBalance
 
 # Assigns an address to an account based on discord ID
 
 
-def getNewAddy(userId):
-    NewAddy = rpc('getaccountaddress', [""+str(userId)+""])
-    print(NewAddy)
-    return NewAddy
+def getUserAddy(userId):
+    UserAddy = rpc('getaccountaddress', [""+str(userId)+""])
+    print(UserAddy)
+    return UserAddy
 
 # Send coins functionality
 
