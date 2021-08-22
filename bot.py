@@ -1,5 +1,5 @@
 import discord
-from botSecret import secret
+from config import *
 from fetch import *
 from data import *
 from discord.ext import commands
@@ -8,19 +8,17 @@ from collections import namedtuple
 import asyncio
 import time
 
-const { lostbetsaddy, adminuid, coinsym } = require('./config.json');
-
 # Set coin specific parameters
 
-CoinName = "(coinsym)" # Enter the ticker of the Altcoin 
+CoinName = coinsym # Enter the ticker of the Altcoin 
 MaxCoinFlipBet = 10 # Enter the max bet amount for coinflip
 MinCoinFlipBet = 1 # Enter the min bet amount for coinflip
 MaxBlackJackBet = 10 # Enter the max bet amount for blackjack
 MinBlackJackBet = 0.01 # Enter the min bet amount for blackjack
 MaxDiceBet = 10 # Enter the max bet amount for dice
 MinDiceBet = 0.01 # Enter the min bet amount for dice
-LostBetsAddy = "(lostbetsaddy)" # Enter the address the client would like lost bets to be sent to
-myUid = "(adminuid)" # Enter the account name for the address the client would like to pay out wins from
+LostBetsAddy = lostbetsaddy # Enter the address the client would like lost bets to be sent to
+myUid = adminuid # Enter the account name for the address the client would like to pay out wins from
 
 bot = commands.Bot(command_prefix='$')
 bot.remove_command("help")

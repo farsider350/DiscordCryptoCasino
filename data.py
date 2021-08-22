@@ -1,8 +1,7 @@
 import sqlite3
+from config import DB_PATH
 
-const { DB_PATH } = require('./config.json');
-
-con = sqlite3.connect('(DB_PATH)', check_same_thread=True)
+con = sqlite3.connect(DB_PATH, check_same_thread=True)
 
 c = con.cursor()
 

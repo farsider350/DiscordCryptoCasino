@@ -1,13 +1,12 @@
 import requests
 import json
 from data import *
+from config import *
 import threading
 
-const { rpcurl, rpcuser, rpcpass } = require('./config.json');
-
-NODE_URL = "(rpcurl)"
-NODE_USER = "(rpcuser)"
-NODE_PASSWORD = "(rpcpass)"
+NODE_URL = rpcurl
+NODE_USER = rpcuser
+NODE_PASSWORD = rpcpass
 
 # Makes rpc connection
 
