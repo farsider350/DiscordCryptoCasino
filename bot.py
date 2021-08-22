@@ -447,14 +447,14 @@ async def rollerjack(ctx, bet):
     tuid = "<@" + str(ctx.author.id) + ">"
     
     if float(bet) > MaxRollerJackBet:
-        botMessage = await ctx.channel.send(tuid + "\nSorry, Max bet for Black Jack is " + str(MaxRollerJackBet) )
+        botMessage = await ctx.channel.send(tuid + "\nSorry, Max bet for High Rollers Black Jack is " + str(MaxRollerJackBet) )
         time.sleep(5)
         await botMessage.delete()
         await ctx.message.delete()
         return
     
     elif float(bet) < MinRollerJackBet:
-        botMessage = await ctx.channel.send(tuid + "\nSorry, Minimum bet for Black Jack is " + str(MaxRollerJackBet) )
+        botMessage = await ctx.channel.send(tuid + "\nSorry, Minimum bet for High Rollers Black Jack is " + str(MinRollerJackBet) )
         time.sleep(5)
         await botMessage.delete()
         await ctx.message.delete()
