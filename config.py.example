@@ -1,4 +1,4 @@
-// Add all config settings here. Max bets and game setting can also be found in bot.py
+# Add all config settings here. Max bets and game setting can also be found in bot.py
 
 secret = "YOUR_BOT_SECRET"
 lostbetsaddy = "The address to collect lost bet at"

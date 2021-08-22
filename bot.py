@@ -288,7 +288,7 @@ async def blackjack(ctx, bet):
     
     cValue = {'Ace': 1, 'Two': 2, 'Three': 3, 'Four': 4, 'Five': 5, 'Six': 6,
               'Seven': 7, 'Eight': 8, 'Nine': 9, 'Ten': 10, 'Jack': 10, 'Queen': 10, 'King': 10}
-    cSuit = {'Hearts': 0, 'Spades': 1, 'Clubs': 2, 'Diamonds': 3}
+    cSuit = {':hearts:' : 0, ':spades:' : 1, ':clubs:' : 2, ':diamonds:' : 3}
     deck = [] # Empt Deck Array
     dCards = [] # Empty Dealer Cards Array
     pCards = [] # Empty Player Cards Array
@@ -389,7 +389,7 @@ async def blackjack(ctx, bet):
                 time.sleep(5)
                 await botMessage.delete()
                 await ctx.message.delete()
-                await ctx.channel.purge(limit=10)
+                await ctx.channel.purge(limit=5)
                 botMessage = await ctx.channel.send("You can now place a new bet.")
                 return
             
@@ -405,7 +405,7 @@ async def blackjack(ctx, bet):
                     time.sleep(5)
                     await botMessage.delete()
                     await ctx.message.delete()
-                    await ctx.channel.purge(limit=10)
+                    await ctx.channel.purge(limit=5)
                     botMessage = await ctx.channel.send("You can now place a new bet.")
                     return
                 elif dealerTotal > playerTotal:
@@ -432,7 +432,7 @@ async def blackjack(ctx, bet):
                 time.sleep(5)
                 await botMessage.delete()
                 await ctx.message.delete()
-                await ctx.channel.purge(limit=10)
+                await ctx.channel.purge(limit=5)
                 botMessage = await ctx.channel.send("You can now place a new bet.")
                 return 
          
